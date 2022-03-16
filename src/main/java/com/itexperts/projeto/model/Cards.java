@@ -1,7 +1,16 @@
 package com.itexperts.projeto.model;
 
-public class Cards {
+import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class Cards implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+
+	@Id
 	private Integer id;
 	private String name;
 
