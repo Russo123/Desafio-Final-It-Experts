@@ -3,14 +3,19 @@ package com.itexperts.projeto.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Account implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
 	@Id
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
 	private String nameOwner;
 	private String agencyCode;
 	private String accountCode;
@@ -22,7 +27,7 @@ public class Account implements Serializable {
 
 	}
 
-	public Account(Integer id, String nameOwner, String agencyCode, String accountCode, String verificationDigital) {
+	public Account(Long id, String nameOwner, String agencyCode, String accountCode, String verificationDigital) {
 		this.id = id;
 		this.nameOwner = nameOwner;
 		this.agencyCode = agencyCode;
@@ -30,11 +35,11 @@ public class Account implements Serializable {
 		this.verificationDigital = verificationDigital;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

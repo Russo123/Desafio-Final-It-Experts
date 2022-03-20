@@ -21,8 +21,9 @@ public class AccountService {
 	}
 
 	public Account getById(Long id) {
-		
-		return null;
+		Optional<Account> accountReturned = accountRepository.findById(id);
+		accountReturned.orElseThrow(() -> new RuntimeException("Account not found"));
+		return accountReturned.get();
 	}
 	
 //	public void update(Account account, Long id) {

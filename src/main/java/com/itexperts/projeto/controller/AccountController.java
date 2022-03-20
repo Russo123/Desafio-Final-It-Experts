@@ -2,6 +2,7 @@ package com.itexperts.projeto.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +27,8 @@ public class AccountController {
 		return ResponseEntity.ok().body(a);
 
 	}
-
+	
+	@GetMapping("/{id}")
 	public ResponseEntity<Account> getById(@PathVariable Long id) {
 		Account account = accountService.getById(id);
 		return ResponseEntity.ok().body(account);
