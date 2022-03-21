@@ -21,7 +21,7 @@ public class Account implements Serializable {
 	private String accountCode;
 	private String verificationDigital;
 
-	// private List<Card> cards;
+	 //private List<Card> cards;
 
 	public Account() {
 

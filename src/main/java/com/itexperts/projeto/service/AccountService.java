@@ -1,5 +1,6 @@
 package com.itexperts.projeto.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +27,23 @@ public class AccountService {
 		return accountReturned.get();
 	}
 	
-//	public void update(Account account, Long id) {
-//		Optional<Account> accountReturned = accountRepository.findById(id);
-//		accountReturned.orElseThrow(() -> new RuntimeException("Account not found"));
-//		
-//		accountReturned.get().setNameOwner(account.getNameOwner());
-//		accountReturned.get().getAccountCode(account.get());
-//		accountReturned.save(accountReturned.get());
-//	}
-
+	public List<Account> getAll(){
+		List<Account> account = accountRepository.findAll();
+		return account;
+	}
+	
+	public void update(Account account, Long id) {
+		
+		Optional<Account> accountReturned = accountRepository.findById(id);
+		
+		accountReturned.orElseThrow(() -> new RuntimeException("Account not found"));
+		
+		accountReturned.get().setNameOwner(account.getNameOwner());
+		accountReturned.get().setAgencyCode(account.getAgencyCode());
+		accountReturned.get().setAccountCode(account.getAccountCode());
+		accountReturned.get().setVerificationDigital(account.getVerificationDigital());
+		
+		accountRepository.save(accountReturned.get());
+	}
+	
 }
