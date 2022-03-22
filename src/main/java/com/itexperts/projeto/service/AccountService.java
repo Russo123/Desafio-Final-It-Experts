@@ -46,4 +46,12 @@ public class AccountService {
 		accountRepository.save(accountReturned.get());
 	}
 	
+	public void delete (Long id) {
+		try {
+			accountRepository.deleteById(id);
+		} catch (Exception e) {
+			
+		}
+	}
+	
 }
