@@ -1,11 +1,14 @@
 package com.itexperts.projeto.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Account implements Serializable {
@@ -21,7 +24,9 @@ public class Account implements Serializable {
 	private String accountCode;
 	private String verificationDigital;
 
-	 //private List<Card> cards;
+	// @OneToMany(cascade=cascadeType.PERSIST)
+	@OneToMany(mappedBy = "account")
+	private List<Cards> cards = new ArrayList<>();
 
 	public Account() {
 
@@ -33,6 +38,7 @@ public class Account implements Serializable {
 		this.agencyCode = agencyCode;
 		this.accountCode = accountCode;
 		this.verificationDigital = verificationDigital;
+		this.cards = cards;
 	}
 
 	public Long getId() {
@@ -73,6 +79,14 @@ public class Account implements Serializable {
 
 	public void setVerificationDigital(String verificationDigital) {
 		this.verificationDigital = verificationDigital;
+	}
+
+	public List<Cards> getCards() {
+		return cards;
+	}
+
+	public void setCards(List<Cards> cards) {
+		this.cards = cards;
 	}
 
 }

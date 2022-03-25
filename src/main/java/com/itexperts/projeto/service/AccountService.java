@@ -16,9 +16,9 @@ public class AccountService {
 	private AccountRepository accountRepository;
 	
 	public Account create(Account account) {
-		Account a = new Account();
-		a = accountRepository.save(account);
-		return a;
+		Account accountCreation = new Account();
+		accountCreation = accountRepository.save(account);
+		return accountCreation;
 	}
 
 	public Account getById(Long id) {

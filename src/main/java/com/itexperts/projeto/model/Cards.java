@@ -1,16 +1,23 @@
 package com.itexperts.projeto.model;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Cards implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
 
@@ -19,8 +26,15 @@ public class Cards implements Serializable {
 	private String number;
 	private String digitCode;
 	private Double limitBalance;
+
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Account account;
 
+	// @ManyToOne(cascade=CascadeType.PERSIST)
+	@OneToMany(mappedBy = "cards")
+	private List<Type> types;
+	
+	
 	public Cards() {
 	}
 
@@ -33,6 +47,7 @@ public class Cards implements Serializable {
 		this.digitCode = digitCode;
 		this.limitBalance = limitBalance;
 		this.account = account;
+		this.types = types;
 	}
 
 	public Integer getId() {
@@ -90,5 +105,13 @@ public class Cards implements Serializable {
 	public void setAccount(Account account) {
 		this.account = account;
 	}
+	
+	public List<Type> getTypes(List<Type> types){
+		return types;
+		
+	}
 
+		public void setTypes(List<Type> types) {
+			this.types = types;
+		}
 }
