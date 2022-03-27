@@ -1,12 +1,13 @@
 package com.itexperts.projeto.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class Type implements Serializable {
@@ -14,10 +15,11 @@ public class Type implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(nullable = false)
 	private Integer id;
-	private String name;
 
-	private Cards cards;
+	@Column(name = "name", length = 45)
+	private String name;
 
 	public Type() {
 	}
@@ -43,12 +45,26 @@ public class Type implements Serializable {
 		this.name = name;
 	}
 
-	public Cards getCards() {
-		return cards;
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name);
 	}
 
-	public void setCards(Cards cards) {
-		this.cards = cards;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Type other = (Type) obj;
+		return Objects.equals(id, other.id) && Objects.equals(name, other.name);
+	}
+
+	@Override
+	public String toString() {
+		return "Type [id=" + id + ", name=" + name + "]";
 	}
 
 }

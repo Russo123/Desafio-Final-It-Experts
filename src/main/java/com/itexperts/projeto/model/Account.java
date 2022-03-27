@@ -3,7 +3,10 @@ package com.itexperts.projeto.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,22 +20,29 @@ public class Account implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(nullable = false)
 	private Long id;
 
+	@Column(nullable = false, name = "name_owner", length = 50)
 	private String nameOwner;
+	
+	@Column(nullable = false, name = "agency_code", length = 4)
 	private String agencyCode;
+	
+	@Column(nullable = false, name = "account_code", length = 8)
 	private String accountCode;
+
+	@Column(nullable = false, name = "verification_digital", length = 1)
 	private String verificationDigital;
 
-	// @OneToMany(cascade=cascadeType.PERSIST)
-	@OneToMany(mappedBy = "account")
+	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
 	private List<Cards> cards = new ArrayList<>();
 
 	public Account() {
 
 	}
 
-	public Account(Long id, String nameOwner, String agencyCode, String accountCode, String verificationDigital) {
+	public Account(Long id, String nameOwner, String agencyCode, String accountCode, String verificationDigital, List<Cards> cards) {
 		this.id = id;
 		this.nameOwner = nameOwner;
 		this.agencyCode = agencyCode;
@@ -87,6 +97,32 @@ public class Account implements Serializable {
 
 	public void setCards(List<Cards> cards) {
 		this.cards = cards;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(accountCode, agencyCode, cards, id, nameOwner, verificationDigital);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Account other = (Account) obj;
+		return Objects.equals(accountCode, other.accountCode) && Objects.equals(agencyCode, other.agencyCode)
+				&& Objects.equals(cards, other.cards) && Objects.equals(id, other.id)
+				&& Objects.equals(nameOwner, other.nameOwner)
+				&& Objects.equals(verificationDigital, other.verificationDigital);
+	}
+
+	@Override
+	public String toString() {
+		return "Account [id=" + id + ", nameOwner=" + nameOwner + ", agencyCode=" + agencyCode + ", accountCode="
+				+ accountCode + ", verificationDigital=" + verificationDigital + ", cards=" + cards + "]";
 	}
 
 }
