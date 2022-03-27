@@ -1,4 +1,4 @@
-package com.itexperts.projeto.enumerator;
+package com.itexperts.projeto.enums;
 
 public enum Types {
 	
