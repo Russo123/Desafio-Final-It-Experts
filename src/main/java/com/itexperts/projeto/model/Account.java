@@ -25,10 +25,10 @@ public class Account implements Serializable {
 
 	@Column(nullable = false, name = "name_owner", length = 50)
 	private String nameOwner;
-	
+
 	@Column(nullable = false, name = "agency_code", length = 4)
 	private String agencyCode;
-	
+
 	@Column(nullable = false, name = "account_code", length = 8)
 	private String accountCode;
 
@@ -38,17 +38,22 @@ public class Account implements Serializable {
 	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
 	private List<Cards> cards = new ArrayList<>();
 
+	@Column(nullable = false, name = "register_id", length = 20, unique = true)
+	private String registerId;
+
 	public Account() {
 
 	}
 
-	public Account(Long id, String nameOwner, String agencyCode, String accountCode, String verificationDigital, List<Cards> cards) {
+	public Account(Long id, String nameOwner, String agencyCode, String accountCode, String verificationDigital,
+			List<Cards> cards, String registerId) {
 		this.id = id;
 		this.nameOwner = nameOwner;
 		this.agencyCode = agencyCode;
 		this.accountCode = accountCode;
 		this.verificationDigital = verificationDigital;
 		this.cards = cards;
+		this.registerId = registerId;
 	}
 
 	public Long getId() {
@@ -97,6 +102,14 @@ public class Account implements Serializable {
 
 	public void setCards(List<Cards> cards) {
 		this.cards = cards;
+	}
+
+	public String getRegisterId() {
+		return registerId;
+	}
+
+	public void setRegisterId(String registerId) {
+		this.registerId = registerId;
 	}
 
 	@Override
