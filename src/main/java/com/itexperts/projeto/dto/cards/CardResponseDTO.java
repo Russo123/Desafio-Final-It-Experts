@@ -11,7 +11,7 @@ public class CardResponseDTO {
 	private Integer id;
 	private String name;
 	private Flag flag;
-	private Type type; 
+	private Type type;
 	private String number;
 	private String digitCode;
 	private BigDecimal limitBalance;

@@ -7,15 +7,20 @@ import com.itexperts.projeto.model.Cards;
 
 public class AccountResponseDTO {
 
-	private Integer id;
+	private Long id;
 	private String nameOwner;
 	private String agencyCode;
 	private String accountCode;
 	private String verificationDigit;
 	private String registerId;
 	private List<Cards> cards;
+	
+	
 
-	public AccountResponseDTO(Integer id, String nameOwner, String agencyCode, String accountCode,
+	public AccountResponseDTO() {
+	}
+
+	public AccountResponseDTO(Long id, String nameOwner, String agencyCode, String accountCode,
 			String verificationDigit, String registerId, List<Cards> cards) {
 		this.id = id;
 		this.nameOwner = nameOwner;
@@ -26,12 +31,12 @@ public class AccountResponseDTO {
 		this.cards = cards;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setId(Long long1) {
+		this.id = long1;
 	}
 
 	public String getNameOwner() {

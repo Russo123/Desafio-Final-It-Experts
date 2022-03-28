@@ -5,21 +5,36 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+@Table(name = "type", indexes = {
+        @Index(name = "type_card_name_index", columnList = "name", unique = true)
+})
 @Entity
 public class Type implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(nullable = false)
 	private Integer id;
 
 	@Column(name = "name", length = 45)
 	private String name;
+
+	@ManyToOne(fetch = FetchType.LAZY.EAGER)
+	@JoinColumn(name = "type_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_type"))
+	@JsonBackReference
+	private Cards cards;
 
 	public Type() {
 	}
@@ -43,6 +58,14 @@ public class Type implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Cards getCards() {
+		return cards;
+	}
+
+	public void setCards(Cards cards) {
+		this.cards = cards;
 	}
 
 	@Override

@@ -13,6 +13,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.springframework.lang.Nullable;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Account implements Serializable {
 
@@ -20,7 +24,7 @@ public class Account implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(nullable = false)
+	@Column(name = "id_account")
 	private Long id;
 
 	@Column(nullable = false, name = "name_owner", length = 50)
@@ -35,6 +39,7 @@ public class Account implements Serializable {
 	@Column(nullable = false, name = "verification_digital", length = 1)
 	private String verificationDigital;
 
+//	@JsonManagedReference
 	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
 	private List<Cards> cards = new ArrayList<>();
 
@@ -42,17 +47,15 @@ public class Account implements Serializable {
 	private String registerId;
 
 	public Account() {
-
 	}
 
 	public Account(Long id, String nameOwner, String agencyCode, String accountCode, String verificationDigital,
-			List<Cards> cards, String registerId) {
+			String registerId) {
 		this.id = id;
 		this.nameOwner = nameOwner;
 		this.agencyCode = agencyCode;
 		this.accountCode = accountCode;
 		this.verificationDigital = verificationDigital;
-		this.cards = cards;
 		this.registerId = registerId;
 	}
 

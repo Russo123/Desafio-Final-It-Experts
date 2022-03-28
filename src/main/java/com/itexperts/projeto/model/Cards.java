@@ -3,22 +3,29 @@ package com.itexperts.projeto.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.itexperts.projeto.enums.Flag;
 
+@Table(name = "card", indexes = {
+        @Index(name = "card_number_index", columnList = "number", unique = true)
+})
 @Entity
 public class Cards implements Serializable {
 
@@ -26,7 +33,6 @@ public class Cards implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(nullable = false)
 	private Integer id;
 
 	@Column(nullable = false, length = 128)
@@ -37,11 +43,11 @@ public class Cards implements Serializable {
 	private Flag flag;
 
 	@NotNull
-	@ManyToOne
-	@JoinColumn(name = "type_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_type"))
-	private Type typeCard;
+	@OneToMany(mappedBy = "cards", cascade = CascadeType.ALL)
+	@JsonManagedReference
+	private List<Type> typeCard;
 
-	@Column(nullable = false, name = "type_card", length = 20)
+	@Column(nullable = false, name = "number", length = 20)
 	private String number;
 
 	@Column(nullable = false, name = "digit_code", length = 5)
@@ -50,24 +56,21 @@ public class Cards implements Serializable {
 	@Column(nullable = false, name = "limit_balance", length = 20)
 	private Double limitBalance;
 
-	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "account_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_card_account"))
+	@ManyToOne(fetch = FetchType.LAZY.EAGER)
+	// account_id esta inserindo null e nao o id correspondente
+	@JoinColumn(name = "account_id", referencedColumnName = "id_account")
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private Account account;
 
 	public Cards() {
 	}
 
-	public Cards(Integer id, String name, Type typeCard, String number, String digitCode, Double limitBalance,
-			Account account) {
+	public Cards(Integer id, String name, String number, String digitCode, Double limitBalance) {
 		this.id = id;
 		this.name = name;
-		this.typeCard = typeCard;
 		this.number = number;
 		this.digitCode = digitCode;
 		this.limitBalance = limitBalance;
-		this.account = account;
 	}
 
 	public Integer getId() {
@@ -86,11 +89,11 @@ public class Cards implements Serializable {
 		this.name = name;
 	}
 
-	public Type getTypeCard() {
+	public List<Type> getTypeCard() {
 		return typeCard;
 	}
 
-	public void setTypeCard(Type typeCard) {
+	public void setTypeCard(List<Type> typeCard) {
 		this.typeCard = typeCard;
 	}
 
