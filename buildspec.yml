@@ -10,5 +10,5 @@ phases:
       - echo Build completed sucessfully
 artifacts:
   files:
-    - targed/desafiofinal.jar
+    - target/desafiofinal.jar
   discard-paths: yes     
