@@ -31,9 +31,8 @@ public class Type implements Serializable {
 	@Column(name = "name", length = 45)
 	private String name;
 
-	@ManyToOne(fetch = FetchType.LAZY.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "type_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_type"))
-	@JsonBackReference
 	private Cards cards;
 
 	public Type() {

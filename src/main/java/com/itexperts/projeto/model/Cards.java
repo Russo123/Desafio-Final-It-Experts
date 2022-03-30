@@ -19,9 +19,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.itexperts.projeto.enums.Flag;
+
 
 @Table(name = "card", indexes = {
         @Index(name = "card_number_index", columnList = "number", unique = true)
@@ -44,7 +44,6 @@ public class Cards implements Serializable {
 
 	@NotNull
 	@OneToMany(mappedBy = "cards", cascade = CascadeType.ALL)
-	@JsonManagedReference
 	private List<Type> typeCard;
 
 	@Column(nullable = false, name = "number", length = 20)
@@ -56,8 +55,7 @@ public class Cards implements Serializable {
 	@Column(nullable = false, name = "limit_balance", length = 20)
 	private Double limitBalance;
 
-	@ManyToOne(fetch = FetchType.LAZY.EAGER)
-	// account_id esta inserindo null e nao o id correspondente
+	@ManyToOne
 	@JoinColumn(name = "account_id", referencedColumnName = "id_account")
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private Account account;
