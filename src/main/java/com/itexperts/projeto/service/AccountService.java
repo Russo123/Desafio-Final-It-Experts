@@ -57,7 +57,7 @@ public class AccountService {
 		return accountRepository.findAll();
 	}
 
-	public void update(Account account, Long id) {
+	public Account update(Account account, Long id) {
 
 		Optional<Account> accountReturned = accountRepository.findById(id);
 
@@ -68,7 +68,7 @@ public class AccountService {
 		accountReturned.get().setAccountCode(account.getAccountCode());
 		accountReturned.get().setVerificationDigital(account.getVerificationDigital());
 
-		accountRepository.save(accountReturned.get());
+		return accountRepository.save(accountReturned.get());
 	}
 
 	public void delete(Long id) {

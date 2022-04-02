@@ -13,10 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import org.springframework.lang.Nullable;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity
 public class Account implements Serializable {
 
